@@ -27,7 +27,7 @@ jobs:
       - name: Validate JSON against schema
         run: |
           echo "Validating JSON files against schema..."
-          for file in $(find . -name '*.json'); do
+          for file in $(find . -name '*.json' ! -path './schemas/*'); do
             filename=$(basename "$file" .json)
             schema="./schemas/${filename}.schema.json"
           
