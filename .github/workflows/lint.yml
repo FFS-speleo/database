@@ -22,7 +22,7 @@ jobs:
           find . -name '*.json' -print0 | xargs -0 -n1 jq empty
 
       - name: Install ajv-cli
-        run: npm install -g ajv-cli
+        run: npm install -g ajv-cli ajv-formats
 
       - name: Validate JSON against schema
         run: |
@@ -37,5 +37,5 @@ jobs:
             fi
           
             echo "Validating $file against $schema"
-            ajv validate -s "$schema" -d "$file"
+            ajv validate -s "$schema" -d "$file" -c ajv-formats
           done
