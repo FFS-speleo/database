@@ -1,0 +1,35 @@
+name: JSON Lint and Validate
+
+on:
+  push:
+    paths:
+      - '**/*.json'
+  pull_request:
+    paths:
+      - '**/*.json'
+
+jobs:
+  validate-json:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Lint JSON files with jq
+        run: |
+          echo "Linting JSON files..."
+          find . -name '*.json' -print0 | xargs -0 -n1 jq empty
+
+      - name: Install ajv-cli
+        run: npm install -g ajv-cli
+
+      - name: Validate JSON against schema
+        run: |
+          echo "Validating JSON files against schema..."
+          for file in $(find . -name '*.json'); do
+            # Skip schema file itself if needed
+            if [[ "$file" == "./schema.json" ]]; then
+              continue
+            fi
+            ajv validate -s ./schema.json -d "$file"
+          done
