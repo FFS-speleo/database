@@ -28,9 +28,14 @@ jobs:
         run: |
           echo "Validating JSON files against schema..."
           for file in $(find . -name '*.json'); do
-            # Skip schema file itself if needed
-            if [[ "$file" == "./schema.json" ]]; then
-              continue
+            filename=$(basename "$file" .json)
+            schema="./schemas/${filename}.schema.json"
+          
+            if [[ ! -f "$schema" ]]; then
+            echo "Schema file $schema not found for $file"
+            exit 1
             fi
-            ajv validate -s ./schema.json -d "$file"
+          
+            echo "Validating $file against $schema"
+            ajv validate -s "$schema" -d "$file"
           done
