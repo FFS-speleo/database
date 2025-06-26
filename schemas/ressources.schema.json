@@ -4,7 +4,7 @@
   "type": "array",
   "items": {
     "type": "object",
-    "required": ["id", "title", "description", "page", "url"],
+    "required": ["id", "title", "url"],
     "properties": {
       "id": {
         "type": "string"
