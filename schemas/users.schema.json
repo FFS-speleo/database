@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Array of Users",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["id", "email", "password"],
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "email": {
+        "type": "string"
+      },
+      "password": {
+        "type": "string"
+      }
+    },
+    "additionalProperties": false
+  }
+}
